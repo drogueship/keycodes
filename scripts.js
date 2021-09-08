@@ -1,4 +1,5 @@
 // #region Declare Variables
+// #region Declare Variables
 
 const keyCodes = {
   0: 'That key has no keycode',
@@ -119,14 +120,6 @@ const keyCodes = {
   133: 'f22',
   134: 'f23',
   135: 'f24',
-  136: 'f25',
-  137: 'f26',
-  138: 'f27',
-  139: 'f28',
-  140: 'f29',
-  141: 'f30',
-  142: 'f31',
-  143: 'f32',
   144: 'num lock',
   145: 'scroll lock',
   151: 'airplane mode',
@@ -191,8 +184,6 @@ const keyLocations = {
   3: 'Numpad',
 };
 
-const spaceDescription = '(Space character)';
-
 const body = document.querySelector('body');
 const mobileInputDiv = document.querySelector('.mobile-input');
 const canvas = document.querySelector('canvas');
@@ -201,34 +192,9 @@ ctx.textBaseline = 'middle';
 ctx.textAlign = 'center';
 ctx.font = '110px sans-serif';
 
-let theme = 'dark';
-
 // #endregion
 
 // #region Main Methods
-
-function createTable() {
-  const tableBody = document.querySelector('.table-body');
-  for (const key in keyCodes) {
-    const row = document.createElement('tr');
-    row.innerHTML += `<td>${key}</td>`;
-    row.innerHTML += `<td>${keyCodes[key]}</td>`;
-    tableBody.appendChild(row);
-  }
-}
-
-function toggleTable() {
-  const table = document.querySelector('.table');
-
-  // Toggle main content and table
-  document.querySelector('.wrap').classList.toggle('hide');
-  document.querySelector('.keycode-display').classList.toggle('hide');
-  table.classList.toggle('hide');
-
-  // If hidden, show back arrow
-  const hidden = table.classList.contains('hide');
-  document.querySelector('#table-button').textContent = hidden ? 'Table' : '⬅';
-}
 
 function drawNumberToCanvas(number) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -241,71 +207,6 @@ function drawNumberToCanvas(number) {
   link.href = data;
 }
 
-function createNotification(text) {
-  // eslint-disable-next-line no-undef
-  new Noty({
-    type: 'info',
-    layout: 'topLeft',
-    timeout: '1500',
-    theme: 'metroui',
-    progressBar: false,
-    text,
-  }).show();
-}
-
-function createTextarea(text) {
-  const textArea = document.createElement('textarea');
-
-  // Place in top-left corner of screen regardless of scroll position.
-  textArea.style.position = 'fixed';
-  textArea.style.top = 0;
-  textArea.style.left = 0;
-  textArea.style.width = '2em';
-  textArea.style.height = '2em';
-
-  textArea.style.padding = 0;
-
-  // Clean up any borders.
-  textArea.style.border = 'none';
-  textArea.style.outline = 'none';
-  textArea.style.boxShadow = 'none';
-
-  // Avoid flash of white box if rendered for any reason.
-  textArea.style.background = 'transparent';
-
-  textArea.value = text;
-
-  document.body.appendChild(textArea);
-  return textArea;
-}
-
-/**
- * This function is used to copy a string to clipboard
- * @param {string} text
- */
-function copyTextToClipboard(text) {
-  if (window.clipboardData && window.clipboardData.setData) {
-    // IE specific code path to prevent textarea being shown while dialog is visible.
-    return window.clipboardData.setData('Text', text);
-  } else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
-    const textArea = createTextarea(text);
-    textArea.focus();
-    textArea.select();
-
-    try {
-      const status = document.execCommand('copy'); // Security exception may be thrown by some browsers.
-      if (status) {
-        createNotification('Copied text to clipboard');
-      }
-      return status;
-    } catch (ex) {
-      console.warn('Copy to clipboard failed.', ex);
-      return false;
-    } finally {
-      document.body.removeChild(textArea);
-    }
-  }
-}
 
 // #endregion
 
@@ -325,132 +226,596 @@ document.addEventListener('touchstart', e => {
   }, 100);
 });
 
+
 body.onkeydown = function(e) {
+
   if (!e.metaKey) {
     e.preventDefault();
   }
   drawNumberToCanvas(e.keyCode);
 
-  // Main e.keyCode display
-  document.querySelector('.keycode-display').innerHTML = e.keyCode;
-
-  // Show the cards with all
-  const cards = document.querySelector('.cards');
-  cards.classList.add('active');
-  cards.classList.remove('hide');
-  document.querySelector('.text-display').classList.add('hide');
-
   // Check if Key_Values is Unidentified then redirect to docs
-  let newKeyText = '';
+  var newKeyText = '';
   if (e.key != null && e.key === 'Unidentified') {
     newKeyText = '<a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values#Special_values" target="_blank" rel="noopener">Unidentified</a>';
   } else if (e.key === ' ') {
-    newKeyText = `<span class="text-muted">${spaceDescription}</span>`;
+    // newKeyText = `<span class="text-muted">(Space character)</span>`;
+	newKeyText = `<span>Space</span>`;
+  } else if (e.which === 17) {
+	newKeyText = `<span>Control</span>`;
+  } else if (e.which === 174) {
+	newKeyText = `<span>Volume-</span>`;
+  } else if (e.which === 175) {
+	newKeyText = `<span>Volume+</span>`;
+  } else if (e.which === 173) {
+	newKeyText = `<span>Mute</span>`;
+  } else if (e.which === 180) {
+	newKeyText = `<span>Mail</span>`;
+  } else if (e.which === 183) {
+	newKeyText = `<span>Calculator</span>`;
+  } else if (e.which === 20) {
+	newKeyText = `<span>Caps Lock</span>`;
+  } else if (e.which === 93) {
+	newKeyText = `<span>Context</span>`;
+  } else if (e.which === 145) {
+	newKeyText = `<span>Scroll Lock</span>`;
+  } else if (e.which === 33) {
+	newKeyText = `<span>Page Up</span>`;
+  } else if (e.which === 34) {
+	newKeyText = `<span>Page Down</span>`;
+  } else if (e.which === 144) {
+	newKeyText = `<span>Num Lock</span>`;
   } else {
     newKeyText = e.key || '';
   }
+	switch(e.which) {
+		case 8:
+			document.getElementById("backspace.mp3").play();
+			break;
+		case 9:
+			document.getElementById("tab.mp3").play();
+			break;
+		case 13:
+			document.getElementById("enter.mp3").play();
+			break;
+		case 16:
+			document.getElementById("shift.mp3").play();
+			break;
+		case 17:
+			document.getElementById("control.mp3").play();
+			break;
+		case 18:
+			document.getElementById("alt.mp3").play();
+			break;
+		case 19:
+			document.getElementById("pause.mp3").play();
+			break;
+		case 20:
+			document.getElementById("capslock.mp3").play();
+			break;
+		case 27:
+			document.getElementById("escape.mp3").play();
+			break;
+		case 32:
+			document.getElementById("spacebar.mp3").play();
+			break;
+		case 33:
+			document.getElementById("pageup.mp3").play();
+			break;
+		case 34:
+			document.getElementById("pagedown.mp3").play();
+			break;
+		case 35:
+			document.getElementById("end.mp3").play();
+			break;
+		case 36:
+			document.getElementById("home.mp3").play();
+			break;
+		case 37:
+			document.getElementById("leftarrow.mp3").play();
+			break;
+		case 38:
+			document.getElementById("uparrow.mp3").play();
+			break;
+		case 39:
+			document.getElementById("rightarrow.mp3").play();
+			break;
+		case 40:
+			document.getElementById("downarrow.mp3").play();
+			break;
+		case 45:
+			document.getElementById("insert.mp3").play();
+			break;
+		case 46:
+			document.getElementById("delete.mp3").play();
+			break;
+		case 47:
+			document.getElementById("help.mp3").play();
+			break;
+		case 48:
+			if(newKeyText === ")"){
+					document.getElementById("rightbracket.mp3"); 
+				}
+			else{
+				document.getElementById("0.mp3");
+				}
+			x.play();
 
-  // Check if location is Unidentified then redirect to docs
-  let newLocationText = '';
-  let newLocationFriendlyText = '';
-  if (e.location == null) {
-    newLocationFriendlyText = 'Unknown';
-  } else if (!(e.location in keyLocations)) {
-    newLocationFriendlyText = '<a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/location" target="_blank" rel="noopener">Other</a>';
-  } else {
-    newLocationFriendlyText = keyLocations[e.location];
-  }
+			break;
+		case 49:
+			if(newKeyText === "!"){
+					document.getElementById("exclamationmark.mp3"); 
+				}
+			else{
+				document.getElementById("1.mp3"); 
+				}
+			x.play();
 
-  if (newLocationFriendlyText !== 'Unknown') {
-    newLocationText = `${e.location} <span class="text-muted">(${newLocationFriendlyText})</span>`;
-  } else {
-    newLocationText = newLocationFriendlyText;
-  }
+			break;
+		case 50:
+			if(newKeyText == "@"){
+					document.getElementById("at.mp3"); 
+				}
+			else{
+				document.getElementById("2.mp3"); 
+				}
+			x.play();
 
-  // Check if code is Unidentified then redirect to docs
-  let newCodeText = '';
-  if (e.code != null && e.code === 'Unidentified') {
-    newCodeText = '<a href="https://w3c.github.io/uievents-code/#table-key-code-special" target="_blank" rel="noopener">Unidentified</a>';
-  } else {
-    newCodeText = e.code || '';
-  }
+			break;
+		case 51:if(newKeyText === "#"){
+					document.getElementById("hash.mp3"); 
+				}
+			else{
+				document.getElementById("3.mp3"); 
+				}
+			x.play();
 
+			break;
+		case 52:
+			if(newKeyText === "$"){
+					document.getElementById("dollar.mp3"); 
+				}
+			else{
+				document.getElementById("4.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 53:
+			if(newKeyText === "%"){
+					document.getElementById("percent.mp3"); 
+				}
+			else{
+				document.getElementById("5.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 54:
+			if(newKeyText === "^"){
+					document.getElementById("circumflex.mp3"); 
+				}
+			else{
+				document.getElementById("6.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 55:
+			if(newKeyText === "&"){
+					document.getElementById("ampersand.mp3"); 
+				}
+			else{
+				document.getElementById("7.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 56:
+			if(newKeyText === "*"){
+					document.getElementById("star.mp3"); 
+				}
+			else{
+				document.getElementById("8.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 57:
+			if(newKeyText === "("){
+					document.getElementById("leftbracket.mp3"); 
+				}
+			else{
+				document.getElementById("9.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 58:
+			if(newKeyText === ")"){
+					document.getElementById("rightbracket.mp3"); 
+				}
+			else{
+				document.getElementById("0.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 59:
+			document.getElementById("semicolon.mp3").play();
+			break;
+		case 60:
+			document.getElementById("lessthan.mp3").play();
+			break;
+		case 61:
+			if(newKeyText === "+"){
+					document.getElementById("plus.mp3"); 
+				}
+			else{
+				document.getElementById("equals.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 64:
+			document.getElementById("at.mp3").play();
+			break;
+		case 65:
+			document.getElementById("a.mp3").play();
+			break;
+		case 66:
+			document.getElementById("b.mp3").play();
+			break;
+		case 67:
+			document.getElementById("c.mp3").play();
+			break;
+		case 68:
+			document.getElementById("d.mp3").play();
+			break;
+		case 69:
+			document.getElementById("e.mp3").play();
+			break;
+		case 70:
+			document.getElementById("f.mp3").play();
+			break;
+		case 71:
+			document.getElementById("g.mp3").play();
+			break;
+		case 72:
+			document.getElementById("h.mp3").play();
+			break;
+		case 73:
+			document.getElementById("i.mp3").play();
+			break;
+		case 74:
+			document.getElementById("j.mp3").play();
+			break;
+		case 75:
+			document.getElementById("k.mp3").play();
+			break;
+		case 76:
+			document.getElementById("l.mp3").play();
+			break;
+		case 77:
+			document.getElementById("m.mp3").play();
+			break;
+		case 78:
+			document.getElementById("n.mp3").play();
+			break;
+		case 79:
+			document.getElementById("o.mp3").play();
+			break;
+		case 80:
+			document.getElementById("p.mp3").play();
+			break;
+		case 81:
+			document.getElementById("q.mp3").play();
+			break;
+		case 82:
+			document.getElementById("r.mp3").play();
+			break;
+		case 83:
+			document.getElementById("s.mp3").play();
+			break;
+		case 84:
+			document.getElementById("t.mp3").play();
+			break;
+		case 85:
+			document.getElementById("u.mp3").play();
+			break;
+		case 86:
+			document.getElementById("v.mp3").play();
+			break;
+		case 87:
+			document.getElementById("w.mp3").play();
+			break;
+		case 88:
+			document.getElementById("x.mp3").play();
+			break;
+		case 89:
+			document.getElementById("y.mp3").play();
+			break;
+		case 90:
+			document.getElementById("z.mp3").play();
+			break;
+		case 91:
+			document.getElementById("windows.mp3").play();
+			break;
+		case 93:
+			document.getElementById("context.mp3").play();
+			break;
+		case 96:
+			document.getElementById("0.mp3").play();
+			break;
+		case 97:
+			document.getElementById("1.mp3").play();
+			break;
+		case 98:
+			document.getElementById("2.mp3").play();
+			break;
+		case 99:
+			document.getElementById("3.mp3").play();
+			break;
+		case 100:
+			document.getElementById("4.mp3").play();
+			break;
+		case 101:
+			document.getElementById("5.mp3").play();
+			break;
+		case 102:
+			document.getElementById("6.mp3").play();
+			break;
+		case 103:
+			document.getElementById("7.mp3").play();
+			break;
+		case 104:
+			document.getElementById("8.mp3").play();
+			break;
+		case 105:
+			document.getElementById("9.mp3").play();
+			break;
+		case 106:
+			document.getElementById("multiply.mp3").play();
+			break;
+		case 107:
+			if(newKeyText === "+"){
+					document.getElementById("plus.mp3"); 
+				}
+			else{
+				document.getElementById("equals.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 108:
+			if(newKeyText === ">"){
+					document.getElementById("greaterthan.mp3"); 
+				}
+			else{
+				document.getElementById("fullstop.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 109:
+			document.getElementById("minus.mp3").play();
+			break;
+		case 110:
+			document.getElementById("decimalpoint.mp3").play();
+			break;
+		case 111:
+			document.getElementById("divide.mp3").play();
+			break;
+		case 112:
+			document.getElementById("f1.mp3").play();
+			break;
+		case 113:
+			document.getElementById("f2.mp3").play();
+			break;
+		case 114:
+			document.getElementById("f3.mp3").play();
+			break;
+		case 115:
+			document.getElementById("f4.mp3").play();
+			break;
+		case 116:
+			document.getElementById("f5.mp3").play();
+			break;
+		case 117:
+			document.getElementById("f6.mp3").play();
+			break;
+		case 118:
+			document.getElementById("f7.mp3").play();
+			break;
+		case 119:
+			document.getElementById("f8.mp3").play();
+			break;
+		case 120:
+			document.getElementById("f9.mp3").play();
+			break;
+		case 121:
+			document.getElementById("f10.mp3").play();
+			break;
+		case 122:
+			document.getElementById("f11.mp3").play();
+			break;
+		case 123:
+			document.getElementById("f12.mp3").play();
+			break;
+		case 144:
+			document.getElementById("numlock.mp3").play();
+			break;
+		case 145:
+			document.getElementById("scrolllock.mp3").play();
+			break;
+		case 160:
+			document.getElementById("circumflex.mp3").play();
+			break;
+		case 161:
+			document.getElementById("exclamationmark.mp3").play();
+			break;
+		case 162:
+			document.getElementById("colon.mp3").play();
+			break;
+		case 163:
+			document.getElementById("hash.mp3").play();
+			break;
+		case 164:
+			document.getElementById("dollarsign.mp3").play();
+			break;
+		case 170:
+			document.getElementById("star.mp3").play();
+			break;
+		case 172:
+			document.getElementById("home.mp3").play();
+			break;
+		case 182:
+			document.getElementById("volumedown.mp3").play();
+			break;
+		case 183:
+			document.getElementById("volumeup.mp3").play();
+			break;
+		case 186:
+			if(newKeyText === ":"){
+					document.getElementById("colon.mp3"); 
+				}
+			else{
+				document.getElementById("semicolon.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 187:
+			if(newKeyText === "+"){
+					document.getElementById("plus.mp3"); 
+				}
+			else{
+				document.getElementById("equals.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 188:
+			if(newKeyText === "<"){
+					document.getElementById("lessthan.mp3"); 
+				}
+			else{
+				document.getElementById("comma.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 189:
+			if(newKeyText === "_"){
+					document.getElementById("underscore.mp3"); 
+				}
+			else{
+				document.getElementById("dash.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 190:
+			if(newKeyText === ">"){
+					document.getElementById("greaterthan.mp3"); 
+				}
+			else{
+				document.getElementById("fullstop.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 191:
+			if(newKeyText === "?"){
+					document.getElementById("questionmark.mp3"); 
+				}
+			else{
+				document.getElementById("forwardslash.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 192:
+			if(newKeyText === "~"){
+					document.getElementById("tild.mp3"); 
+				}
+			else{
+				document.getElementById("grave.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 194:
+			document.getElementById("fullstop.mp3").play();
+			break;
+		case 219:
+	if(newKeyText === "{"){
+					document.getElementById("leftcurlybracket.mp3"); 
+				}
+			else{
+				document.getElementById("leftsquarebracket.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 220:
+			if(newKeyText === "|"){
+					document.getElementById("pipe.mp3"); 
+				}
+			else{
+				document.getElementById("backslash.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 221:
+if(newKeyText === "}"){
+					document.getElementById("rightcurlybracket.mp3"); 
+				}
+			else{
+				document.getElementById("rightsquarebracket.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 222:
+			if(newKeyText === "\""){
+					document.getElementById("quote.mp3"); 
+				}
+			else{
+				document.getElementById("apostrophe.mp3"); 
+				}
+			x.play();
+
+			break;
+		case 223:
+			document.getElementById("grave.mp3").play();
+			break;
+		case 225:
+			document.getElementById("alt.mp3").play();
+			break;
+		case 226:
+			document.getElementById("backslash.mp3").play();
+			break;
+	}
+	
   // Clear input if manually entered
   const mobileInput = document.querySelector('.mobile-input input');
   if (mobileInput !== null) {
     mobileInput.value = '';
   }
+    // Moved Main e.keyCode display
+  document.querySelector('.keycode-display').innerHTML = newKeyText;
 
-  document.querySelector('.item-key .main-description').innerHTML = newKeyText;
-  document.querySelector('.item-location .main-description').innerHTML = newLocationText;
-  document.querySelector('.item-which .main-description').innerHTML = e.which || '';
-  document.querySelector('.item-code .main-description').innerHTML = newCodeText;
+
+
 };
 
-body.onkeyup = function(e) {
-  if(e.keyCode == '44') {
-    body.onkeydown(e);
-  }
-}
-
-const cardDivs = document.querySelectorAll('.card');
-Array.from(cardDivs).forEach(card => {
-  card.addEventListener('click', onCardClick);
-});
-
-function onCardClick() {
-  const card = this;
-  let description = card.querySelector('.card-main .main-description').innerHTML;
-  description = description.replace(/<[^>]*>?/gm, '');
-  if (description === spaceDescription) {
-    description = ' ';
-  }
-  copyTextToClipboard(description);
-}
-
-// #endregion
-
-// #region Theme Methods
-
-function queryMediaTheme() {
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    theme = e.matches ? 'dark' : 'light';
-    updateTheme();
-  });
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    theme = 'dark';
-  } else {
-    theme = 'light';
-  }
-}
-
-function toggleTheme() {
-  theme = (theme === 'light') ? 'dark' : 'light';
-  updateTheme();
-}
-
-function updateTheme() {
-  const html = document.querySelector("html");
-  const button = document.querySelector("#theme-button");
-
-  if (theme === 'light') {
-    html.classList.add('light-theme');
-    html.classList.remove('dark-theme');
-    button.innerHTML = 'Dark theme';
-  } else {
-    html.classList.add('dark-theme');
-    html.classList.remove('light-theme');
-    button.innerHTML = 'Light theme';
-  }
-}
 
 // #endregion
 
 // #region Init Methods
 
-queryMediaTheme();
-updateTheme();
-createTable();
 drawNumberToCanvas('⌨️');
 
 // #endregion
