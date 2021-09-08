@@ -1,18 +1,12 @@
 <!doctype html>
-<html lang="en" class="light-theme">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>JavaScript Event KeyCodes</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <title>Press a key!</title>
+  <link href='https://fonts.googleapis.com/css?family=Nunito+Sans' rel='stylesheet' type='text/css'>
   <meta name="viewport" content="width=device-width, user-scalable=no">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="JavaScript Event KeyCodes">
-  <meta name="twitter:description" content="Keycode testing tool - which keys map to which keycodes?">
-  <meta name="twitter:creator" content="@wesbos">
-  <meta name="twitter:image" content="https://cdn1.imggmi.com/uploads/2019/7/12/f6b03f5628f7850649714200ab517a52-full.png">
-  <link rel="stylesheet" href="style.css?v=07232021">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" />
   <link rel="icon" href="">
 </head>
@@ -20,84 +14,343 @@
 <body>
   <canvas width="128" height="128" hidden></canvas>
   <div class="display">
-    <table class="table hide">
-      <thead>
-        <tr>
-          <th>Key Code</th>
-          <th>Key</th>
-        </tr>
-      </thead>
-      <tbody class="table-body">
-      </tbody>
-    </table>
     <div class="wrap" aria-live="polite" aria-atomic="true">
       <p class="keycode-display"></p>
-      <p class="text-display">Press any key to get the JavaScript event keycode</p>
-      <div class="cards hide">
-        <div class="card item-key">
-          <div class="card-header">event.key</div>
-          <div class="card-main">
-            <div class="main-description">key</div>
-          </div>
-        </div>
-        <div class="card item-location">
-          <div class="card-header">event.location
-            <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/location" target="_blank" rel="noopener"
-              class="more-info"></a>
-          </div>
-          <div class="card-main">
-            <div class="main-description">location</div>
-          </div>
-        </div>
-        <div class="card item-which">
-          <div class="card-header">
-            event.which
-            <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank" rel="noopener"
-              class="deprecated-link">(deprecated)</a>
-          </div>
-          <div class="card-main">
-            <div class="main-description">which</div>
-          </div>
-        </div>
-        <div class="card item-code">
-          <div class="card-header">event.code</div>
-          <div class="card-main">
-            <div class="main-description">code</div>
-          </div>
-        </div>
-      </div>
       <div class="mobile-input">
       </div>
     </div>
-    <div class="fixed-buttons">
-      <button id="table-button" onclick={toggleTable()} class="toggle-button">Table</button>
-      <button id="theme-button" onclick={toggleTheme()} class="toggle-button">Dark theme</button>
-    </div>
   </div>
 
-  <span class="love">Made with love by
-    <a href="https://wesbos.com" target="_blank" rel="noopener">Wes Bos</a> — fork or suggest edits on
-    <a href="https://github.com/wesbos/keycodes" target="_blank" rel="noopener">GitHub</a> —
+  <span class="love">Modified with love by 
+	<a href="https://www.drogueship.com" target="_blank" rel="noopener">Gus</a>  for Hemi, using code from
+    <a href="https://wesbos.com" target="_blank" rel="noopener">Wes Bos</a>  </span>
 
-    <a href="https://twitter.com/wesbos" class="twitter-follow-button" data-show-count="false" target="_blank" rel="noopener">Follow
-      @wesbos</a>
+<audio id="0.mp3">
+     <source src="mp3/0.mp3" type="audio/mpeg">
+</audio>
+<audio id="1.mp3">
+     <source src="mp3/1.mp3" type="audio/mpeg">
+</audio>
+<audio id="2.mp3">
+     <source src="mp3/2.mp3" type="audio/mpeg">
+</audio>
+<audio id="3.mp3">
+     <source src="mp3/3.mp3" type="audio/mpeg">
+</audio>
+<audio id="4.mp3">
+     <source src="mp3/4.mp3" type="audio/mpeg">
+</audio>
+<audio id="5.mp3">
+     <source src="mp3/5.mp3" type="audio/mpeg">
+</audio>
+<audio id="6.mp3">
+     <source src="mp3/6.mp3" type="audio/mpeg">
+</audio>
+<audio id="7.mp3">
+     <source src="mp3/7.mp3" type="audio/mpeg">
+</audio>
+<audio id="8.mp3">
+     <source src="mp3/8.mp3" type="audio/mpeg">
+</audio>
+<audio id="9.mp3">
+     <source src="mp3/9.mp3" type="audio/mpeg">
+</audio>
+<audio id="alt.mp3">
+     <source src="mp3/alt.mp3" type="audio/mpeg">
+</audio>
+<audio id="a.mp3">
+     <source src="mp3/a.mp3" type="audio/mpeg">
+</audio>
+<audio id="ampersand.mp3">
+     <source src="mp3/ampersand.mp3" type="audio/mpeg">
+</audio>
+<audio id="apostrophe.mp3">
+     <source src="mp3/apostrophe.mp3" type="audio/mpeg">
+</audio>
+<audio id="at.mp3">
+     <source src="mp3/at.mp3" type="audio/mpeg">
+</audio>
+<audio id="backslash.mp3">
+     <source src="mp3/backslash.mp3" type="audio/mpeg">
+</audio>
+<audio id="backspace.mp3">
+     <source src="mp3/backspace.mp3" type="audio/mpeg">
+</audio>
+<audio id="b.mp3">
+     <source src="mp3/b.mp3" type="audio/mpeg">
+</audio>
+<audio id="capslock.mp3">
+     <source src="mp3/capslock.mp3" type="audio/mpeg">
+</audio>
+<audio id="circumflex.mp3">
+     <source src="mp3/circumflex.mp3" type="audio/mpeg">
+</audio>
+<audio id="c.mp3">
+     <source src="mp3/c.mp3" type="audio/mpeg">
+</audio>
+<audio id="colon.mp3">
+     <source src="mp3/colon.mp3" type="audio/mpeg">
+</audio>
+<audio id="comma.mp3">
+     <source src="mp3/comma.mp3" type="audio/mpeg">
+</audio>
+<audio id="context.mp3">
+     <source src="mp3/context.mp3" type="audio/mpeg">
+</audio>
+<audio id="control.mp3">
+     <source src="mp3/control.mp3" type="audio/mpeg">
+</audio>
+<audio id="dash.mp3">
+     <source src="mp3/dash.mp3" type="audio/mpeg">
+</audio>
+<audio id="delete.mp3">
+     <source src="mp3/delete.mp3" type="audio/mpeg">
+</audio>
+<audio id="d.mp3">
+     <source src="mp3/d.mp3" type="audio/mpeg">
+</audio>
+<audio id="dollar.mp3">
+     <source src="mp3/dollar.mp3" type="audio/mpeg">
+</audio>
+<audio id="downarrow.mp3">
+     <source src="mp3/downarrow.mp3" type="audio/mpeg">
+</audio>
+<audio id="e.mp3">
+     <source src="mp3/e.mp3" type="audio/mpeg">
+</audio>
+<audio id="end.mp3">
+     <source src="mp3/end.mp3" type="audio/mpeg">
+</audio>
+<audio id="enter.mp3">
+     <source src="mp3/enter.mp3" type="audio/mpeg">
+</audio>
+<audio id="equals.mp3">
+     <source src="mp3/equals.mp3" type="audio/mpeg">
+</audio>
+<audio id="escape.mp3">
+     <source src="mp3/escape.mp3" type="audio/mpeg">
+</audio>
+<audio id="exclamationmark.mp3">
+     <source src="mp3/exclamationmark.mp3" type="audio/mpeg">
+</audio>
+<audio id="f10.mp3">
+     <source src="mp3/f10.mp3" type="audio/mpeg">
+</audio>
+<audio id="f11.mp3">
+     <source src="mp3/f11.mp3" type="audio/mpeg">
+</audio>
+<audio id="f12.mp3">
+     <source src="mp3/f12.mp3" type="audio/mpeg">
+</audio>
+<audio id="f1.mp3">
+     <source src="mp3/f1.mp3" type="audio/mpeg">
+</audio>
+<audio id="f2.mp3">
+     <source src="mp3/f2.mp3" type="audio/mpeg">
+</audio>
+<audio id="f3.mp3">
+     <source src="mp3/f3.mp3" type="audio/mpeg">
+</audio>
+<audio id="f4.mp3">
+     <source src="mp3/f4.mp3" type="audio/mpeg">
+</audio>
+<audio id="f5.mp3">
+     <source src="mp3/f5.mp3" type="audio/mpeg">
+</audio>
+<audio id="f6.mp3">
+     <source src="mp3/f6.mp3" type="audio/mpeg">
+</audio>
+<audio id="f7.mp3">
+     <source src="mp3/f7.mp3" type="audio/mpeg">
+</audio>
+<audio id="f8.mp3">
+     <source src="mp3/f8.mp3" type="audio/mpeg">
+</audio>
+<audio id="f9.mp3">
+     <source src="mp3/f9.mp3" type="audio/mpeg">
+</audio>
+<audio id="f.mp3">
+     <source src="mp3/f.mp3" type="audio/mpeg">
+</audio>
+<audio id="forwardslash.mp3">
+     <source src="mp3/forwardslash.mp3" type="audio/mpeg">
+</audio>
+<audio id="fullstop.mp3">
+     <source src="mp3/fullstop.mp3" type="audio/mpeg">
+</audio>
+<audio id="g.mp3">
+     <source src="mp3/g.mp3" type="audio/mpeg">
+</audio>
+<audio id="grave.mp3">
+     <source src="mp3/grave.mp3" type="audio/mpeg">
+</audio>
+<audio id="greaterthan.mp3">
+     <source src="mp3/greaterthan.mp3" type="audio/mpeg">
+</audio>
+<audio id="hash.mp3">
+     <source src="mp3/hash.mp3" type="audio/mpeg">
+</audio>
+<audio id="h.mp3">
+     <source src="mp3/h.mp3" type="audio/mpeg">
+</audio>
+<audio id="home.mp3">
+     <source src="mp3/home.mp3" type="audio/mpeg">
+</audio>
+<audio id="i.mp3">
+     <source src="mp3/i.mp3" type="audio/mpeg">
+</audio>
+<audio id="insert.mp3">
+     <source src="mp3/insert.mp3" type="audio/mpeg">
+</audio>
+<audio id="j.mp3">
+     <source src="mp3/j.mp3" type="audio/mpeg">
+</audio>
+<audio id="k.mp3">
+     <source src="mp3/k.mp3" type="audio/mpeg">
+</audio>
+<audio id="leftarrow.mp3">
+     <source src="mp3/leftarrow.mp3" type="audio/mpeg">
+</audio>
+<audio id="leftbracket.mp3">
+     <source src="mp3/leftbracket.mp3" type="audio/mpeg">
+</audio>
+<audio id="leftcurlybracket.mp3">
+     <source src="mp3/leftcurlybracket.mp3" type="audio/mpeg">
+</audio>
+<audio id="leftsquarebracket.mp3">
+     <source src="mp3/leftsquarebracket.mp3" type="audio/mpeg">
+</audio>
+<audio id="lessthan.mp3">
+     <source src="mp3/lessthan.mp3" type="audio/mpeg">
+</audio>
+<audio id="l.mp3">
+     <source src="mp3/l.mp3" type="audio/mpeg">
+</audio>
+<audio id="m.mp3">
+     <source src="mp3/m.mp3" type="audio/mpeg">
+</audio>
+<audio id="n.mp3">
+     <source src="mp3/n.mp3" type="audio/mpeg">
+</audio>
+<audio id="numlock.mp3">
+     <source src="mp3/numlock.mp3" type="audio/mpeg">
+</audio>
+<audio id="tab.mp3">
+     <source src="mp3/tab.mp3" type="audio/mpeg">
+</audio>
+<audio id="o.mp3">
+     <source src="mp3/o.mp3" type="audio/mpeg">
+</audio>
+<audio id="pagedown.mp3">
+     <source src="mp3/pagedown.mp3" type="audio/mpeg">
+</audio>
+<audio id="pageup.mp3">
+     <source src="mp3/pageup.mp3" type="audio/mpeg">
+</audio>
+<audio id="pause.mp3">
+     <source src="mp3/pause.mp3" type="audio/mpeg">
+</audio>
+<audio id="percent.mp3">
+     <source src="mp3/percent.mp3" type="audio/mpeg">
+</audio>
+<audio id="pipe.mp3">
+     <source src="mp3/pipe.mp3" type="audio/mpeg">
+</audio>
+<audio id="plus.mp3">
+     <source src="mp3/plus.mp3" type="audio/mpeg">
+</audio>
+<audio id="p.mp3">
+     <source src="mp3/p.mp3" type="audio/mpeg">
+</audio>
+<audio id="q.mp3">
+     <source src="mp3/q.mp3" type="audio/mpeg">
+</audio>
+<audio id="questionmark.mp3">
+     <source src="mp3/questionmark.mp3" type="audio/mpeg">
+</audio>
+<audio id="quote.mp3">
+     <source src="mp3/quote.mp3" type="audio/mpeg">
+</audio>
+<audio id="rightarrow.mp3">
+     <source src="mp3/rightarrow.mp3" type="audio/mpeg">
+</audio>
+<audio id="rightbracket.mp3">
+     <source src="mp3/rightbracket.mp3" type="audio/mpeg">
+</audio>
+<audio id="rightcurlybracket.mp3">
+     <source src="mp3/rightcurlybracket.mp3" type="audio/mpeg">
+</audio>
+<audio id="rightsquarebracket.mp3">
+     <source src="mp3/rightsquarebracket.mp3" type="audio/mpeg">
+</audio>
+<audio id="r.mp3">
+     <source src="mp3/r.mp3" type="audio/mpeg">
+</audio>
+<audio id="scrolllock.mp3">
+     <source src="mp3/scrolllock.mp3" type="audio/mpeg">
+</audio>
+<audio id="semicolon.mp3">
+     <source src="mp3/semicolon.mp3" type="audio/mpeg">
+</audio>
+<audio id="shift.mp3">
+     <source src="mp3/shift.mp3" type="audio/mpeg">
+</audio>
+<audio id="s.mp3">
+     <source src="mp3/s.mp3" type="audio/mpeg">
+</audio>
+<audio id="spacebar.mp3">
+     <source src="mp3/spacebar.mp3" type="audio/mpeg">
+</audio>
+<audio id="star.mp3">
+     <source src="mp3/star.mp3" type="audio/mpeg">
+</audio>
+<audio id="tild.mp3">
+     <source src="mp3/tild.mp3" type="audio/mpeg">
+</audio>
+<audio id="t.mp3">
+     <source src="mp3/t.mp3" type="audio/mpeg">
+</audio>
+<audio id="u.mp3">
+     <source src="mp3/u.mp3" type="audio/mpeg">
+</audio>
+<audio id="underscore.mp3">
+     <source src="mp3/underscore.mp3" type="audio/mpeg">
+</audio>
+<audio id="uparrow.mp3">
+     <source src="mp3/uparrow.mp3" type="audio/mpeg">
+</audio>
+<audio id="v.mp3">
+     <source src="mp3/v.mp3" type="audio/mpeg">
+</audio>
+<audio id="windows.mp3">
+     <source src="mp3/windows.mp3" type="audio/mpeg">
+</audio>
+<audio id="w.mp3">
+     <source src="mp3/w.mp3" type="audio/mpeg">
+</audio>
+<audio id="x.mp3">
+     <source src="mp3/x.mp3" type="audio/mpeg">
+</audio>
+<audio id="y.mp3">
+     <source src="mp3/y.mp3" type="audio/mpeg">
+</audio>
+<audio id="z.mp3">
+     <source src="mp3/z.mp3" type="audio/mpeg">
+</audio>
+<audio id="divide.mp3">
+     <source src="mp3/divide.mp3" type="audio/mpeg">
+</audio>
+<audio id="multiply.mp3">
+     <source src="mp3/multiply.mp3" type="audio/mpeg">
+</audio>
+<audio id="minus.mp3">
+     <source src="mp3/minus.mp3" type="audio/mpeg">
+</audio>
+<audio id="decimalpoint.mp3">
+     <source src="mp3/decimalpoint.mp3" type="audio/mpeg">
+</audio>
 
-    <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://keycode.info" data-text="Nice tool for finding JavaScript event keycodes"
-      data-via="wesbos" data-related="wesbos" target="_blank" rel="noopener">Tweet</a>
-
-
-  </span>
-
-  <script type='text/javascript'>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js');
-    }
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
-  <script src="scripts.js?v=07232021"></script>
-  <script src="google-analytics.js"></script>
-  <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b45decb6c8304abfaafe7d19167b59b5"}'></script>
-</body>
+<script src="scripts.js"></script>
+  </body>
 
 </html>
